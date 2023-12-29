@@ -155,8 +155,8 @@ function useSuggestion(e) {
  * Splits a string into an array according to a substring, so that it is easier to put a portion of the string into a
  * bold HTML element.
  *
- * @param {*} str String to split.
- * @param {*} substr The substring within the string.
+ * @param {String} str String to split.
+ * @param {String} substr The substring within the string.
  * @returns An array containing the pieces of the string, with the piece to bold being the second element.
  */
 function separateStringForBolding(str, substr) {
