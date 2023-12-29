@@ -106,15 +106,53 @@ function searchHandler(e) {
   if (inputText !== "") {
     const fruitResults = search(inputText);
     showSuggestions(fruitResults, inputText);
+  } else {
+    suggestions.replaceChildren();
   }
 }
 
+/**
+ * Creates "li" elements for each fruit in the results and appends it to the unordered list in the suggestions div
+ * element.  This also will bold the part of the fruit name that contains the inputVal text.
+ *
+ * @param {Array} results The array of fruits to show as suggestions.
+ * @param {String} inputVal The search bar text used to generate the results.
+ */
 function showSuggestions(results, inputVal) {
-  // TODO
+  const liElements = results.map((fruit) => {
+    const separatedString = separateStringForBolding(fruit, inputVal);
+    const li = document.createElement("li");
+    const b = document.createElement("b");
+    b.innerText = separatedString[1];
+
+    li.append(separatedString[0]);
+    li.append(b);
+    li.append(separatedString[2]);
+
+    return li;
+  });
+  suggestions.replaceChildren(...liElements);
 }
 
 function useSuggestion(e) {
   // TODO
+}
+
+/**
+ * Splits a string into an array according to a substring, so that it is easier to put a portion of the string into a
+ * bold HTML element.
+ *
+ * @param {*} str String to split.
+ * @param {*} substr The substring within the string.
+ * @returns An array containing the pieces of the string, with the piece to bold being the second element.
+ */
+function separateStringForBolding(str, substr) {
+  const i = str.toLowerCase().indexOf(substr.toLowerCase());
+  return [
+    str.slice(0, i),
+    str.slice(i, i + substr.length),
+    str.slice(i + substr.length),
+  ];
 }
 
 input.addEventListener("keyup", searchHandler);
