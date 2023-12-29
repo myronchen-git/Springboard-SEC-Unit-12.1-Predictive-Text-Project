@@ -134,8 +134,21 @@ function showSuggestions(results, inputVal) {
   suggestions.replaceChildren(...liElements);
 }
 
+/**
+ * Takes the event target's text, which will be a search result suggestion, and places it into the search bar.
+ *
+ * @param {Event} e The event that will contain the list item element of a suggested fruit search result.
+ */
 function useSuggestion(e) {
-  // TODO
+  let li = e.target;
+
+  // In case the event target is the bold element that is within the list item element.
+  if (e.target.parentElement.tagName == "LI") {
+    li = e.target.parentElement;
+  }
+
+  input.value = li.innerText;
+  suggestions.replaceChildren();
 }
 
 /**
