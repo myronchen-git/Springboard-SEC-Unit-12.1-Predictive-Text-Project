@@ -1,7 +1,7 @@
 const input = document.querySelector("#fruit");
 const suggestions = document.querySelector(".suggestions ul");
 
-const fruit = [
+const fruits = [
   "Apple",
   "Apricot",
   "Avocado 🥑",
@@ -83,16 +83,30 @@ const fruit = [
   "Yuzu",
 ];
 
+/**
+ * Searches the fruits list for a fruit containing the given string of characters.
+ *
+ * @param {String} str A string of characters to find in a fruit name.
+ * @returns An array of fruits that contain the given string of characters.
+ */
 function search(str) {
-  let results = [];
-
-  // TODO
-
-  return results;
+  return fruits.filter((fruit) =>
+    fruit.toLowerCase().includes(str.toLowerCase())
+  );
 }
 
+/**
+ * Handles the processing of the search text and displaying of possible results.
+ *
+ * @param {Event} e The event created from typing into the search bar.
+ */
 function searchHandler(e) {
-  // TODO
+  const inputText = e.target.value;
+
+  if (inputText !== "") {
+    const fruitResults = search(inputText);
+    showSuggestions(fruitResults, inputText);
+  }
 }
 
 function showSuggestions(results, inputVal) {
