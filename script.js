@@ -103,7 +103,7 @@ function search(str) {
 function searchHandler(e) {
   const inputText = e.target.value;
 
-  if (inputText !== "") {
+  if (inputText.length > 1) {
     const fruitResults = search(inputText);
     showSuggestions(fruitResults, inputText);
   } else {
