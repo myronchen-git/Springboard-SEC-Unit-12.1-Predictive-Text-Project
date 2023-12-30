@@ -102,18 +102,16 @@ function search(str) {
  * @param {Event} e The event created from typing into the search bar.
  */
 function searchHandler(e) {
-  if (suggestions.classList.contains("hide")) {
-    suggestions.classList.remove("hide");
-  } else {
-    const inputText = e.target.value;
+  const inputText = e.target.value;
 
-    if (inputText.length > 1) {
-      const fruitResults = search(inputText);
-      showSuggestions(fruitResults, inputText);
-    } else {
-      suggestions.replaceChildren();
-    }
+  if (inputText.length > 1) {
+    const fruitResults = search(inputText);
+    createSuggestions(fruitResults, inputText);
+  } else {
+    suggestions.replaceChildren();
   }
+
+  showSuggestions();
 }
 
 /**
@@ -123,7 +121,7 @@ function searchHandler(e) {
  * @param {Array} results The array of fruits to show as suggestions.
  * @param {String} inputVal The search bar text used to generate the results.
  */
-function showSuggestions(results, inputVal) {
+function createSuggestions(results, inputVal) {
   const liElements = results.map((fruit) => {
     const separatedString = separateStringForBolding(fruit, inputVal);
     const li = document.createElement("li");
@@ -138,6 +136,13 @@ function showSuggestions(results, inputVal) {
     return li;
   });
   suggestions.replaceChildren(...liElements);
+}
+
+/**
+ * Shows the unordered list of suggestions, whether or not it is hidden.
+ */
+function showSuggestions() {
+  suggestions.classList.remove("hide");
 }
 
 /**
@@ -195,6 +200,7 @@ function separateStringForBolding(str, substr) {
 }
 
 input.addEventListener("keyup", searchHandler);
-input.addEventListener("click", searchHandler);
 suggestions.addEventListener("click", useSuggestion);
+
+input.addEventListener("click", showSuggestions);
 document.body.addEventListener("click", hideSuggestions);
