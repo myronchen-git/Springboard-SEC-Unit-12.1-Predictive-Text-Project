@@ -102,13 +102,17 @@ function search(str) {
  * @param {Event} e The event created from typing into the search bar.
  */
 function searchHandler(e) {
-  const inputText = e.target.value;
-
-  if (inputText.length > 1) {
-    const fruitResults = search(inputText);
-    showSuggestions(fruitResults, inputText);
+  if (suggestions.classList.contains("hide")) {
+    suggestions.classList.remove("hide");
   } else {
-    suggestions.replaceChildren();
+    const inputText = e.target.value;
+
+    if (inputText.length > 1) {
+      const fruitResults = search(inputText);
+      showSuggestions(fruitResults, inputText);
+    } else {
+      suggestions.replaceChildren();
+    }
   }
 }
 
@@ -129,10 +133,31 @@ function showSuggestions(results, inputVal) {
     li.append(separatedString[0]);
     li.append(b);
     li.append(separatedString[2]);
+    li.classList.add("suggestions__search-result");
 
     return li;
   });
   suggestions.replaceChildren(...liElements);
+}
+
+/**
+ * Hides the suggestions if the event target is an element in the search-container div.
+ *
+ * @param {Event} e The event that possibly contains an element in the search-container div.
+ */
+function hideSuggestions(e) {
+  if (
+    !(
+      e.target.tagName === "INPUT" &&
+      e.target.parentElement.classList.contains("search-container")
+    ) &&
+    !(
+      e.target.tagName === "LI" &&
+      e.target.classList.contains("suggestions__search-result")
+    )
+  ) {
+    suggestions.classList.add("hide");
+  }
 }
 
 /**
@@ -170,4 +195,6 @@ function separateStringForBolding(str, substr) {
 }
 
 input.addEventListener("keyup", searchHandler);
+input.addEventListener("click", searchHandler);
 suggestions.addEventListener("click", useSuggestion);
+document.body.addEventListener("click", hideSuggestions);

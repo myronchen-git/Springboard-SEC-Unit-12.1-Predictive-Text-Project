@@ -52,19 +52,23 @@ input {
   padding: 0;
 }
 
-.search-container ul li {
+li.suggestions__search-result {
   padding: 0.75rem 1rem;
   list-style-type: none;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.search-container ul li:last-child {
+li.suggestions__search-result:last-child {
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
 
-.search-container ul li:hover {
+li.suggestions__search-result:hover {
   background-color: rgba(255, 69, 0, 0.25);
+}
+
+.hide {
+  display: none;
 }
 
 @media (min-width: 600px) {
